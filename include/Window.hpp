@@ -14,5 +14,9 @@ public:
     Window();
     ~Window();
 
+    void SwapBuffers();
+    bool ShouldClose();
+
 private:
+
 };

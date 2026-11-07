@@ -37,6 +37,8 @@ add_executable(Basel_Engine
         src/Window.cpp
         include/Window.hpp
         include/config.hpp
+        src/Engine.cpp
+        include/Engine.hpp
 )
 
 target_include_directories(Basel_Engine PRIVATE include)

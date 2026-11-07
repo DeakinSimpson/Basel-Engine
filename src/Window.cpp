@@ -18,6 +18,9 @@ static void InitGlad();
 void FramebuffferSizeCallback([[maybe_unused]] GLFWwindow* window,
     int width, int height);
 
+/**
+ * Window initialization logic
+ */
 Window::Window() : window_(nullptr, glfwDestroyWindow)
 {
     glfwInit();
@@ -32,11 +35,30 @@ Window::Window() : window_(nullptr, glfwDestroyWindow)
     glfwSetFramebufferSizeCallback(window_.get(), FramebuffferSizeCallback);
 }
 
+/**
+ * Terminates the window when destructor is called
+ */
 Window::~Window()
 {
     glfwTerminate();
 }
 
+void Window::SwapBuffers()
+{
+    glfwSwapBuffers(window_.get());
+}
+
+bool Window::ShouldClose()
+{
+    return glfwWindowShouldClose(window_.get());
+}
+
+/**
+ * This creates a GLFWwindow object and checks that it initialized correctly
+ * as well as return a unique pointer to it
+ *
+ * @return A unique pointer to a window object
+ */
 static std::unique_ptr<GLFWwindow, decltype(&glfwDestroyWindow)>
 CreateWindowObject()
 {
@@ -63,6 +85,9 @@ CreateWindowObject()
     return window;
 }
 
+/**
+ * Sets the configurations for the window
+ */
 static void ConfigureGLFWWindow()
 {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -77,6 +102,9 @@ static void ConfigureGLFWWindow()
     }
 };
 
+/**
+ * Initializes GLAD and checks that it successfully started
+ */
 static void InitGlad()
 {
     if (!gladLoadGL((GLADloadfunc)glfwGetProcAddress))
@@ -86,8 +114,14 @@ static void InitGlad()
     }
 }
 
+/**
+ *
+ * @param window the window that should be updates
+ * @param width The new width of the window
+ * @param height The new height of the window
+ */
 void FramebuffferSizeCallback([[maybe_unused]] GLFWwindow* window,
-    int width, int height)
+                              int width, int height)
 {
     glViewport(0, 0, width, height);
 }
