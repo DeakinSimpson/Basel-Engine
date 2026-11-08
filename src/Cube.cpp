@@ -9,6 +9,5 @@
 
 void Cube::Render()
 {
-    std::cout << "Cube::Render() Run" << std::endl;
     renderable_.Render();
 }

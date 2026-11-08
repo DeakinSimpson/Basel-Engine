@@ -145,3 +145,17 @@ void FramebuffferSizeCallback([[maybe_unused]] GLFWwindow* window,
     glViewport(0, 0, width, height);
 }
 
+void Window::ToggleWireframe()
+{
+    if (isWireframeMode)
+    {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        isWireframeMode = false;
+    }
+    else
+    {
+
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        isWireframeMode = true;
+    }
+}

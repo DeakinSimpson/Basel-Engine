@@ -14,7 +14,24 @@ static void ProcessEscapeKey(Window& window)
     }
 }
 
+static void ProcessPKey(Window& window, bool& pKeyPressedLastFrame)
+{
+    if (window.KeyStatus(GLFW_KEY_P, GLFW_PRESS))
+    {
+        if (!pKeyPressedLastFrame)
+        {
+            window.ToggleWireframe();
+            pKeyPressedLastFrame = true;
+        }
+    }
+    else
+    {
+        pKeyPressedLastFrame = false;
+    }
+}
+
 void Controller::ProcessInput(Window& window)
 {
     ProcessEscapeKey(window);
+    ProcessPKey(window, pPressedLastFrame);
 }

@@ -20,8 +20,6 @@ Renderable::Renderable(const Mesh & mesh, const char* vertexShaderSource,
 
 void Renderable::Render()
 {
-    std::cout << "Renderable::Render() Run" << std::endl;
-
     BindVAOBuffer();
     Mesh::Render();
 }

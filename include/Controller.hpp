@@ -7,6 +7,7 @@
 
 class Controller
 {
+    bool pPressedLastFrame { false };
 public:
     void ProcessInput(Window& window);
 };

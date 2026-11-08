@@ -10,6 +10,7 @@
 class Window
 {
     std::unique_ptr<GLFWwindow, decltype(&glfwDestroyWindow)> window_;
+    bool isWireframeMode { false };
 public:
     Window();
     ~Window();
@@ -19,6 +20,7 @@ public:
     void Close();
     bool KeyStatus(const int key, const int action);
     void SetBackground(const float r, const float g, const float b, const float a);
+    void ToggleWireframe();
 
 private:
 
