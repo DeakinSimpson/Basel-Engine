@@ -14,11 +14,14 @@ Renderable::Renderable(const Mesh & mesh, const char* vertexShaderSource,
                        const char* fragmentShaderSource)
     : Mesh(mesh)
     , shader_(vertexShaderSource, fragmentShaderSource)
-{
+{  }
 
-}
-
+/**
+ * Uses the shader assigned to the renderable then calls the mesh to be rendered
+ * with the shader program.
+ */
 void Renderable::Render()
 {
+    shader_.UseShaderProgram();
     Mesh::Render();
 }

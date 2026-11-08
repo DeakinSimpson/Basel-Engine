@@ -13,6 +13,12 @@ static void CompileShader(const uint32_t& shader,
 static void LinkShaderProgram(const uint32_t& shaderProgram,
     const uint32_t& vertexShader, const uint32_t& fragmentShader);
 
+/**
+ * Compiles both shaders
+ *
+ * @param vertexShaderSource The vertex shader that will be used
+ * @param fragmentShaderSource The fragment shader that will be used
+ */
 Shader::Shader(const char* vertexShaderSource, const char* fragmentShaderSource)
     : vertexShader_(glCreateShader(GL_VERTEX_SHADER))
     , fragmentShader_(glCreateShader(GL_FRAGMENT_SHADER))
@@ -21,17 +27,33 @@ Shader::Shader(const char* vertexShaderSource, const char* fragmentShaderSource)
     CompileShader(vertexShader_, vertexShaderSource, "Vertex Shader Failed to Compile");
     CompileShader(fragmentShader_, fragmentShaderSource, "Fragment Shader Failed to Compile");
     LinkShaderProgram(shaderProgram_, vertexShader_, fragmentShader_);
-    glUseProgram(shaderProgram_);
 }
 
+/**
+ * Delete the shaders when they are no longer used
+ */
 Shader::~Shader()
 {
     glDeleteShader(vertexShader_);
     glDeleteShader(fragmentShader_);
 }
 
+/**
+ * Wrapper for glUseProgram
+ */
+void Shader::UseShaderProgram()
+{
+    glUseProgram(shaderProgram_);
+}
+
+/**
+ *
+ * @param shader The shader that will be compiles
+ * @param shaderSource The shader source that will be used
+ * @param errorMessage What error message to print if the shader fails to compile
+ */
 static void CompileShader(const uint32_t& shader,
-                          const char* shaderSource, const std::string& errorMessage)
+    const char* shaderSource, const std::string& errorMessage)
 {
     glShaderSource(shader, 1, &shaderSource, nullptr);
     glCompileShader(shader);
@@ -48,8 +70,14 @@ static void CompileShader(const uint32_t& shader,
     }
 }
 
+/**
+ *
+ * @param shaderProgram Shader program that will have vert and frag shaders linked
+ * @param vertexShader The vertex shader to be linked to the shader program
+ * @param fragmentShader The fragment shader to be linked to the shader program
+ */
 static void LinkShaderProgram(const uint32_t& shaderProgram,
-    const uint32_t& vertexShader, const uint32_t& fragmentShader)
+                              const uint32_t& vertexShader, const uint32_t& fragmentShader)
 {
     glAttachShader(shaderProgram, vertexShader);
     glAttachShader(shaderProgram, fragmentShader);
