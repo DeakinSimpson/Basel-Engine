@@ -8,6 +8,13 @@
 static void UnbindBuffers();
 static void SetVertexAttribPointer();
 
+/**
+ * Starts by generating the buffers and then sends the vertices and indices to
+ * the gpu
+ *
+ * @param vertices The vertices to be sent to the gpu
+ * @param indices The indices to be sent to the gpu
+ */
 Mesh::Mesh(const std::vector<Vertex>& vertices,
            const std::vector<uint32_t>& indices)
         : vertices_(vertices)
@@ -32,12 +39,18 @@ Mesh::Mesh(const std::vector<Vertex>& vertices,
     UnbindBuffers();
 }
 
+/**
+ * Unbinds the buffers so they are not attached to arrays anymore
+ */
 static void UnbindBuffers()
 {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
 
+/**
+ * Sets what the vertex should be, this is so that the vertex stride is correct
+ */
 static void SetVertexAttribPointer()
 {
     glVertexAttribPointer(0, VERTEX_VALUE_COUNT, GL_FLOAT, GL_FALSE,
@@ -45,6 +58,9 @@ static void SetVertexAttribPointer()
     glEnableVertexAttribArray(0);
 }
 
+/**
+ * Generates VAO, VBO and EBO buffers
+ */
 void Mesh::GenerateBuffers()
 {
     glGenVertexArrays(1, &VAO_);
@@ -52,12 +68,12 @@ void Mesh::GenerateBuffers()
     glGenBuffers(1, &EBO_);
 }
 
-void Mesh::BindVAOBuffer()
-{
-    glBindVertexArray(VAO_);
-}
-
+/**
+ * Renders the mesh object (this does not work if there is not a shader (this
+ * should mostly only be called via the child rendererable)
+ */
 void Mesh::Render()
 {
+    glBindVertexArray(VAO_);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
