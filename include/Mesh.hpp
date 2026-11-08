@@ -36,7 +36,5 @@ public:
     void Render();
 
 private:
-    // void GenerateBuffers();
-    // void BindBuffers();
-    // void BufferData();
+    void GenerateBuffers();
 };
