@@ -39,6 +39,16 @@ add_executable(Basel_Engine
         include/config.hpp
         src/Engine.cpp
         include/Engine.hpp
+        src/Controller.cpp
+        include/Controller.hpp
+        src/Mesh.cpp
+        include/Mesh.hpp
+        src/Cube.cpp
+        include/Cube.hpp
+        src/Renderable.cpp
+        include/Renderable.hpp
+        src/Shader.cpp
+        include/Shader.hpp
 )
 
 target_include_directories(Basel_Engine PRIVATE include)

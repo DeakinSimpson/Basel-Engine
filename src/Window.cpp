@@ -54,6 +54,25 @@ bool Window::ShouldClose()
 }
 
 /**
+ * Closes the window
+ */
+void Window::Close()
+{
+    glfwSetWindowShouldClose(window_.get(), true);
+}
+
+bool Window::KeyStatus(const int key, const int action)
+{
+    return glfwGetKey(window_.get(), key) == action;
+}
+
+void Window::SetBackground(const float r, const float g, const float b, const float a)
+{
+    glClearColor(r, g, b, a);
+    glClear(GL_COLOR_BUFFER_BIT);
+}
+
+/**
  * This creates a GLFWwindow object and checks that it initialized correctly
  * as well as return a unique pointer to it
  *

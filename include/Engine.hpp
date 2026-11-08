@@ -3,12 +3,14 @@
 //
 
 #pragma once
+#include "Controller.hpp"
 #include "Window.hpp"
 
 
 class Engine
 {
     Window window_;
+    Controller controller_;
 public:
     Engine();
 public:
