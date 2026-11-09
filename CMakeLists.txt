@@ -29,6 +29,19 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(glad)
 
+# fetch stb --------------------------------------------------------------------
+FetchContent_Declare(
+        stb
+        GIT_REPOSITORY https://github.com/nothings/stb
+        GIT_TAG master
+        GIT_SHALLOW TRUE
+)
+
+FetchContent_MakeAvailable(stb)
+
+add_library(stb INTERFACE)
+target_include_directories(stb SYSTEM INTERFACE ${stb_SOURCE_DIR})
+
 glad_add_library(glad_gl TYPE STATIC API gl:core=4.6)
 
 # create executable and link libraries -----------------------------------------
@@ -49,9 +62,10 @@ add_executable(Basel_Engine
         include/Renderable.hpp
         src/Shader.cpp
         include/Shader.hpp
+        src/stb_image.cpp
 )
 
 target_include_directories(Basel_Engine PRIVATE include)
 
 find_package(OpenGL REQUIRED)
-target_link_libraries(Basel_Engine PRIVATE glfw glad_gl OpenGL::GL)
+target_link_libraries(Basel_Engine PRIVATE glfw glad_gl stb OpenGL::GL)

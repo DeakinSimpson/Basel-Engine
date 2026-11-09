@@ -4,14 +4,19 @@
 
 #include "../include/Shader.hpp"
 
+#include <fstream>
 #include <iostream>
+#include <sstream>
+#include "stb_image.h"
 
 #include "glad/gl.h"
 
-static void CompileShader(const uint32_t& shader,
-    const char* shaderSource, const std::string& errorMessage);
-static void LinkShaderProgram(const uint32_t& shaderProgram,
-    const uint32_t& vertexShader, const uint32_t& fragmentShader);
+static void CompileShader(uint32_t shader,
+    const std::string& shaderSource, const std::string& errorMessage);
+static void LinkShaderProgram(uint32_t shaderProgram,
+    uint32_t vertexShader, uint32_t fragmentShader);
+static std::string GetShaderCode(const char* shaderPath);
+static uint32_t CompileTexture(const char* texturePath);
 
 /**
  * Compiles both shaders
@@ -19,14 +24,22 @@ static void LinkShaderProgram(const uint32_t& shaderProgram,
  * @param vertexShaderSource The vertex shader that will be used
  * @param fragmentShaderSource The fragment shader that will be used
  */
-Shader::Shader(const char* vertexShaderSource, const char* fragmentShaderSource)
+Shader::Shader(const char* vertexShaderSource, const char* fragmentShaderSource, const char* texturePath)
     : vertexShader_(glCreateShader(GL_VERTEX_SHADER))
     , fragmentShader_(glCreateShader(GL_FRAGMENT_SHADER))
+    , texture_(CompileTexture(texturePath))
     , shaderProgram_(glCreateProgram())
 {
-    CompileShader(vertexShader_, vertexShaderSource, "Vertex Shader Failed to Compile");
-    CompileShader(fragmentShader_, fragmentShaderSource, "Fragment Shader Failed to Compile");
+    CompileShader(vertexShader_,GetShaderCode(vertexShaderSource) ,
+        "Vertex Shader Failed to Compile");
+    CompileShader(fragmentShader_, GetShaderCode(fragmentShaderSource),
+        "Fragment Shader Failed to Compile");
+
     LinkShaderProgram(shaderProgram_, vertexShader_, fragmentShader_);
+
+    UseShaderProgram();
+
+    SetInt("texture", 1);
 }
 
 /**
@@ -46,17 +59,90 @@ void Shader::UseShaderProgram()
     glUseProgram(shaderProgram_);
 }
 
+void Shader::SetBool(const std::string &name, bool value) const
+{
+    glUniform1i(glGetUniformLocation(
+        shaderProgram_, name.c_str()), static_cast<int>(value));
+}
+
+void Shader::SetInt(const std::string &name, int value) const
+{
+    glUniform1i(glGetUniformLocation(shaderProgram_, name.c_str()), value);
+}
+
+void Shader::SetFloat(const std::string &name, float value) const
+{
+    glUniform1i(glGetUniformLocation(shaderProgram_, name.c_str()), value);
+}
+
+static std::string GetShaderCode(const char* shaderPath)
+{
+    std::ifstream shaderFile;
+
+    // ensure the ifstream emits exceptions
+    shaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+
+    try
+    {
+        // open the file at the path
+        shaderFile.open(shaderPath);
+
+        // read file to string stream
+        std::stringstream shaderStream;
+        shaderStream << shaderFile.rdbuf();
+
+        // convert the stream to a string and return it
+        return shaderStream.str();
+    }
+    catch (std::ifstream::failure& e)
+    {
+        std::cout << "ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ: " << shaderPath
+                  << " " << e.what() << std::endl;
+        return {};
+    }
+}
+
+static uint32_t CompileTexture(const char* texturePath)
+{
+    uint32_t texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    int width, height, nrChannels;
+    stbi_set_flip_vertically_on_load(true);
+
+    unsigned char* data = stbi_load(texturePath, &width, &height, &nrChannels, STBI_rgb_alpha);
+
+    if (data)
+    {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+
+    stbi_image_free(data);
+
+    return texture;
+}
+
 /**
  *
  * @param shader The shader that will be compiles
  * @param shaderSource The shader source that will be used
  * @param errorMessage What error message to print if the shader fails to compile
  */
-static void CompileShader(const uint32_t& shader,
-    const char* shaderSource, const std::string& errorMessage)
+static void CompileShader(uint32_t shader,
+    const std::string& shaderSource, const std::string& errorMessage)
 {
-    glShaderSource(shader, 1, &shaderSource, nullptr);
-    glCompileShader(shader);
+    const char* source = shaderSource.c_str();
+    glShaderSource(shader, 1, &source, nullptr);
 
     int  success;
     char infoLog[512];
@@ -76,8 +162,8 @@ static void CompileShader(const uint32_t& shader,
  * @param vertexShader The vertex shader to be linked to the shader program
  * @param fragmentShader The fragment shader to be linked to the shader program
  */
-static void LinkShaderProgram(const uint32_t& shaderProgram,
-                              const uint32_t& vertexShader, const uint32_t& fragmentShader)
+static void LinkShaderProgram(uint32_t shaderProgram,
+                              uint32_t vertexShader, uint32_t fragmentShader)
 {
     glAttachShader(shaderProgram, vertexShader);
     glAttachShader(shaderProgram, fragmentShader);

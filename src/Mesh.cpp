@@ -53,9 +53,15 @@ static void UnbindBuffers()
  */
 static void SetVertexAttribPointer()
 {
-    glVertexAttribPointer(0, VERTEX_VALUE_COUNT, GL_FLOAT, GL_FALSE,
-        sizeof(Vertex), nullptr);
+    // position attribute
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
+    // color attribute
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+    // texture coord attribute
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+    glEnableVertexAttribArray(2);
 }
 
 /**
@@ -75,5 +81,5 @@ void Mesh::GenerateBuffers()
 void Mesh::Render()
 {
     glBindVertexArray(VAO_);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(indices_.size()), GL_UNSIGNED_INT, nullptr);
 }

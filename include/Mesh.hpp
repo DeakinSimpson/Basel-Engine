@@ -13,10 +13,18 @@ struct Vector3
     float z;
 };
 
+struct Vector2
+{
+    float u;
+    float v;
+};
+
 constexpr int VERTEX_VALUE_COUNT { 3 };
 struct Vertex
 {
     Vector3 position;
+    Vector3 color;
+    Vector2 texture;
 };
 
 class Mesh

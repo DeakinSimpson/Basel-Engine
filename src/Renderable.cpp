@@ -11,9 +11,9 @@
 #include "glad/gl.h"
 
 Renderable::Renderable(const Mesh & mesh, const char* vertexShaderSource,
-                       const char* fragmentShaderSource)
+                       const char* fragmentShaderSource, const char* texturePath)
     : Mesh(mesh)
-    , shader_(vertexShaderSource, fragmentShaderSource)
+    , shader_(vertexShaderSource, fragmentShaderSource, texturePath)
 {  }
 
 /**
