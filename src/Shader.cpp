@@ -10,9 +10,11 @@
 #include "stb_image.h"
 
 #include "glad/gl.h"
+#include "GLFW/glfw3.h"
+#include "glm/gtc/type_ptr.hpp"
 
 static void CompileShader(uint32_t shader,
-    const std::string& shaderSource, const std::string& errorMessage);
+                          const std::string& shaderSource, const std::string& errorMessage);
 static void LinkShaderProgram(uint32_t shaderProgram,
     uint32_t vertexShader, uint32_t fragmentShader);
 static std::string GetShaderCode(const char* shaderPath);
@@ -40,6 +42,12 @@ Shader::Shader(const char* vertexShaderSource, const char* fragmentShaderSource,
     UseShaderProgram();
 
     SetInt("texture", 1);
+
+    glm::mat4 trans { glm::mat4(1.0f) };
+    trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));\
+    trans = glm::rotate(trans, 2.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+
+    SetMat4("transform", trans);
 }
 
 /**
@@ -73,6 +81,11 @@ void Shader::SetInt(const std::string &name, int value) const
 void Shader::SetFloat(const std::string &name, float value) const
 {
     glUniform1i(glGetUniformLocation(shaderProgram_, name.c_str()), value);
+}
+
+void Shader::SetMat4(const std::string &name, glm::mat4 value) const
+{
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram_, name.c_str()), 1, GL_FALSE, glm::value_ptr((value)));
 }
 
 static std::string GetShaderCode(const char* shaderPath)

@@ -20,9 +20,9 @@ class Cube
         1, 2, 3   // second Triangle
     };
 
-    const char* vertexShaderSource = "/home/deakin/CLionProjects/Basel-Engine/Assets/Shaders/Vertex/1.0.vertex";
+    const char* vertexShaderSource = "/home/deakin/CLionProjects/Basel-Engine/Assets/Shaders/Vertex/1.0.vert";
 
-    const char* fragmentShaderSource = "/home/deakin/CLionProjects/Basel-Engine/Assets/Shaders/Fragment/1.0.fragment";
+    const char* fragmentShaderSource = "/home/deakin/CLionProjects/Basel-Engine/Assets/Shaders/Fragment/1.0.frag";
 
     const char* texturePath = "/home/deakin/CLionProjects/Basel-Engine/Assets/Textures/GigaChad.jpg";
 
