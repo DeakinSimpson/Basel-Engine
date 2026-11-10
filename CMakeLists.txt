@@ -51,6 +51,14 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(glm)
 
+# fetch nlohmann/json ----------------------------------------------------------
+FetchContent_Declare(
+        json
+        URL https://github.com/nlohmann/json/releases/download/v3.12.0/json.tar.xz
+)
+
+FetchContent_MakeAvailable(json)
+
 glad_add_library(glad_gl TYPE STATIC API gl:core=4.6)
 
 # create executable and link libraries -----------------------------------------
@@ -77,4 +85,4 @@ add_executable(Basel_Engine
 target_include_directories(Basel_Engine PRIVATE include)
 
 find_package(OpenGL REQUIRED)
-target_link_libraries(Basel_Engine PRIVATE glfw glad_gl stb glm::glm OpenGL::GL)
+target_link_libraries(Basel_Engine PRIVATE glfw glad_gl stb glm::glm OpenGL::GL nlohmann_json::nlohmann_json)
