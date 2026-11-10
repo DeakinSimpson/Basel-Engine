@@ -7,7 +7,3 @@
 #include <iostream>
 #include <ostream>
 
-void Cube::Render()
-{
-    renderable_.Render();
-}

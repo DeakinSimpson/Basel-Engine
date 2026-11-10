@@ -82,6 +82,8 @@ add_executable(Basel_Engine
         src/stb_image.cpp
         src/ConfigReader.cpp
         include/ConfigReader.hpp
+        src/Renderer.cpp
+        include/Renderer.hpp
 )
 
 target_include_directories(Basel_Engine PRIVATE include)

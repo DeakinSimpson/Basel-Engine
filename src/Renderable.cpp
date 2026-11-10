@@ -22,6 +22,10 @@ Renderable::Renderable(const Mesh & mesh, const char* vertexShaderSource,
  */
 void Renderable::Render()
 {
-    shader_.UseShaderProgram();
     Mesh::Render();
+}
+
+Shader& Renderable::GetShader()
+{
+    return shader_;
 }

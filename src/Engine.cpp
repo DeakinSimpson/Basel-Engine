@@ -26,9 +26,10 @@ void Engine::Run()
         // TODO: Remove later
         window_.SetBackground(0.2, 0.3, 0.3, 1.0);
 
-        cube.Render();
+        renderer_.BeginFrame(800.0f / 600.0f);
+        renderer_.Render(cube);
 
         window_.SwapBuffers();
-        glfwPollEvents();
+        glfwPollEvents ();
     }
 }

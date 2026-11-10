@@ -41,13 +41,7 @@ Shader::Shader(const char* vertexShaderSource, const char* fragmentShaderSource,
 
     UseShaderProgram();
 
-    SetInt("texture", 1);
-
-    glm::mat4 trans { glm::mat4(1.0f) };
-    trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));\
-    trans = glm::rotate(trans, 2.0f, glm::vec3(0.0f, 0.0f, 1.0f));
-
-    SetMat4("transform", trans);
+    SetInt("texture1", 0);
 }
 
 /**
@@ -83,7 +77,7 @@ void Shader::SetFloat(const std::string &name, float value) const
     glUniform1i(glGetUniformLocation(shaderProgram_, name.c_str()), value);
 }
 
-void Shader::SetMat4(const std::string &name, glm::mat4 value) const
+void Shader::SetMat4(const std::string &name, const glm::mat4& value) const
 {
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram_, name.c_str()), 1, GL_FALSE, glm::value_ptr((value)));
 }

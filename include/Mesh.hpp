@@ -3,6 +3,9 @@
 //
 
 #pragma once
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <cstdint>
 #include <vector>
 
@@ -35,6 +38,7 @@ class Mesh
 
     std::vector<Vertex> vertices_;
     std::vector<uint32_t> indices_;
+    glm::mat4 model_ { glm::mat4(1.0f) };
 
 public:
     Mesh(const std::vector<Vertex>& vertices,
