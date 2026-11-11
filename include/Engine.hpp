@@ -14,9 +14,13 @@ class Engine
     Controller controller_;
     Renderer renderer_;
     Camera camera_;
+    float deltaTime_ { 0.0f };
+    float lastFrame_ { 0.0f };
 public:
     Engine();
-public:
     void Run();
+
+private:
+    void UpdateTime();
 };
 

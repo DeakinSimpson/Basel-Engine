@@ -15,7 +15,7 @@ class Camera
     glm::vec3 cameraFront_ = glm::vec3(0.0f, 0.0f, -1.0f);
     glm::vec3 cameraUp_    = glm::vec3(0.0f, 1.0f,  0.0f);
 
-    static constexpr float cameraSpeed = 0.05f;
+    static constexpr float cameraSpeed = 10.0f;
 
 
 public:
@@ -25,9 +25,28 @@ public:
         { return glm::normalize(glm::cross(cameraUp_, GetDirection())); }
     [[nodiscard]] glm::mat4 GetView()
         { return glm::lookAt(cameraPos_, cameraPos_ + cameraFront_, cameraUp_); }
+    [[nodiscard]] float GetSpeed(const float deltaTime) const
+        { return cameraSpeed * deltaTime; }
 
-    void MoveForward() { cameraPos_ += cameraSpeed * cameraFront_; }
-    void MoveLeft()    { cameraPos_ -= glm::normalize(glm::cross(cameraFront_, cameraUp_)) * cameraSpeed; }
-    void MoveRight()   { cameraPos_ += glm::normalize(glm::cross(cameraFront_, cameraUp_)) * cameraSpeed; }
-    void MoveBack()    { cameraPos_ -= cameraSpeed * cameraFront_; }
+    void MoveForward(const float deltaTime)
+    {
+        cameraPos_ += GetSpeed(deltaTime) * cameraFront_;
+    }
+
+    void MoveLeft(const float deltaTime)
+    {
+        cameraPos_ -= glm::normalize(glm::cross(cameraFront_, cameraUp_)) *
+            GetSpeed(deltaTime);
+    }
+
+    void MoveRight(const float deltaTime)
+    {
+        cameraPos_ += glm::normalize(glm::cross(cameraFront_, cameraUp_)) *
+            GetSpeed(deltaTime);
+    }
+
+    void MoveBack(const float deltaTime)
+    {
+        cameraPos_ -= GetSpeed(deltaTime) * cameraFront_;
+    }
 };

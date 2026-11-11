@@ -10,5 +10,5 @@ class Controller
 {
     bool pPressedLastFrame { false };
 public:
-    void ProcessInput(Window& window, Camera& camera);
+    void ProcessInput(Window& window, Camera& camera, const float deltaTime);
 };

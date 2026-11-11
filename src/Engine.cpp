@@ -8,7 +8,7 @@
 
 #include "Cube.hpp"
 
-static void Run();
+static void UpdateTime(float& deltaTime, float& lastFrame);
 
 Engine::Engine()
 {
@@ -22,7 +22,8 @@ void Engine::Run()
     Cube cube;
     while (!window_.ShouldClose())
     {
-        controller_.ProcessInput(window_, camera_);
+        UpdateTime();
+        controller_.ProcessInput(window_, camera_, deltaTime_);
         // TODO: Remove later
         window_.SetBackground(0.2, 0.3, 0.3, 1.0);
 
@@ -32,4 +33,11 @@ void Engine::Run()
         window_.SwapBuffers();
         glfwPollEvents ();
     }
+}
+
+void Engine::UpdateTime()
+{
+    float currentFrame = glfwGetTime();
+    deltaTime_ = currentFrame - lastFrame_;
+    lastFrame_ = currentFrame;
 }
