@@ -84,6 +84,8 @@ add_executable(Basel_Engine
         include/ConfigReader.hpp
         src/Renderer.cpp
         include/Renderer.hpp
+        src/Camera.cpp
+        include/Camera.hpp
 )
 
 target_include_directories(Basel_Engine PRIVATE include)
