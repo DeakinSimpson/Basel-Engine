@@ -6,6 +6,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+
+#include "Camera.hpp"
 #include "Renderable.hpp"
 
 class Renderer
@@ -15,7 +17,7 @@ class Renderer
 
 public:
     Renderer();
-    void BeginFrame(const float aspectRatio);
+    void BeginFrame(Camera& camera, const float aspectRatio);
     void Render(Renderable& renderable);
 
 };

@@ -30,8 +30,17 @@ static void ProcessPKey(Window& window, bool& pKeyPressedLastFrame)
     }
 }
 
-void Controller::ProcessInput(Window& window)
+static void ProcessMovement(Camera& camera, Window& window)
+{
+    if (window.KeyStatus(GLFW_KEY_W, GLFW_PRESS)) { camera.MoveForward(); }
+    if (window.KeyStatus(GLFW_KEY_S, GLFW_PRESS)) { camera.MoveBack();    }
+    if (window.KeyStatus(GLFW_KEY_A, GLFW_PRESS)) { camera.MoveLeft();    }
+    if (window.KeyStatus(GLFW_KEY_D, GLFW_PRESS)) { camera.MoveRight();   }
+}
+
+void Controller::ProcessInput(Window& window, Camera& camera)
 {
     ProcessEscapeKey(window);
     ProcessPKey(window, pPressedLastFrame);
+    ProcessMovement(camera, window);
 }

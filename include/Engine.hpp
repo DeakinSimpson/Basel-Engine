@@ -13,6 +13,7 @@ class Engine
     Window window_;
     Controller controller_;
     Renderer renderer_;
+    Camera camera_;
 public:
     Engine();
 public:

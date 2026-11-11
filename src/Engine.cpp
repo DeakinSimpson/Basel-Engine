@@ -22,11 +22,11 @@ void Engine::Run()
     Cube cube;
     while (!window_.ShouldClose())
     {
-        controller_.ProcessInput(window_);
+        controller_.ProcessInput(window_, camera_);
         // TODO: Remove later
         window_.SetBackground(0.2, 0.3, 0.3, 1.0);
 
-        renderer_.BeginFrame(800.0f / 600.0f);
+        renderer_.BeginFrame(camera_, 800.0f / 600.0f);
         renderer_.Render(cube);
 
         window_.SwapBuffers();

@@ -15,10 +15,10 @@ Renderer::Renderer()
     glEnable(GL_DEPTH_TEST);
 }
 
-void Renderer::BeginFrame(const float aspectRatio)
+void Renderer::BeginFrame(Camera& camera, const float aspectRatio)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    view_ = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f));
+    view_ = camera.GetView();
     projection_ = glm::perspective(glm::radians(45.0f), aspectRatio, 0.1f, 100.0f);
 }
 
