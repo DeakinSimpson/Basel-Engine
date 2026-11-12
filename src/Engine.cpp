@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-#include "Cube.hpp"
+#include "Square.hpp"
 
 Engine::Engine() : gui_(window_)
 {
@@ -17,7 +17,7 @@ Engine::Engine() : gui_(window_)
 // main engine loop
 void Engine::Run()
 {
-    Cube cube;
+    Square cube;
     while (!window_.ShouldClose())
     {
         gui_.StartFrame();

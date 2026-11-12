@@ -5,7 +5,7 @@
 #include "Mesh.hpp"
 #include "Renderable.hpp"
 
-class Cube : public Renderable
+class Square : public Renderable
 {
     inline static const std::vector<Vertex> vertices = {
         // positions          // colors           // texture coords
@@ -27,7 +27,7 @@ class Cube : public Renderable
     static constexpr const char* texturePath = "/home/deakin/CLionProjects/Basel-Engine/Assets/Textures/GigaChad.jpg";
 
 public:
-    Cube()
+    Square()
     : Renderable(Mesh(vertices, indices), vertexShaderSource,
         fragmentShaderSource, texturePath)
     {  }

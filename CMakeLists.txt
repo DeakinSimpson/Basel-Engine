@@ -104,8 +104,8 @@ add_executable(Basel_Engine
         include/Controller.hpp
         src/Mesh.cpp
         include/Mesh.hpp
-        src/Cube.cpp
-        include/Cube.hpp
+        src/Square.cpp
+        include/Square.hpp
         src/Renderable.cpp
         include/Renderable.hpp
         src/Shader.cpp
