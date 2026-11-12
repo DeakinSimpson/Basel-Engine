@@ -8,11 +8,9 @@
 
 #include "Cube.hpp"
 
-static void UpdateTime(float& deltaTime, float& lastFrame);
-
 Engine::Engine() : controller_(window_)
 {
-    std::cout << "Engine run" << std::endl;
+    std::cout << "Starting Engine" << std::endl;
     Run();
 }
 

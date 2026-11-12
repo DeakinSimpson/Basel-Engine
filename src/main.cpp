@@ -8,11 +8,8 @@
 
 int main()
 {
-    std::cout << "Hello World!" << std::endl;
-
     Engine engine;
-
-
+    std::cout << "Stopping Engine..." << std::endl;
 
     return 0;
 }
