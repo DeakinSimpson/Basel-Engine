@@ -159,3 +159,16 @@ void Window::ToggleWireframe()
         isWireframeMode = true;
     }
 }
+
+// TODO: make this changeable when opening the menu (esc)
+void Window::CaptureCursor()
+{
+    glfwSetInputMode(window_.get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+}
+
+glm::vec2 Window::GetMousePosition()
+{
+    double x, y;
+    glfwGetCursorPos(window_.get(), &x, &y);
+    return { static_cast<float>(x), static_cast<float>(y) };
+}

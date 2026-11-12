@@ -10,7 +10,7 @@
 
 static void UpdateTime(float& deltaTime, float& lastFrame);
 
-Engine::Engine()
+Engine::Engine() : controller_(window_)
 {
     std::cout << "Engine run" << std::endl;
     Run();
