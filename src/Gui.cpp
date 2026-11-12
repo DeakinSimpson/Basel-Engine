@@ -7,6 +7,8 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
+static void FPS();
+
 Gui::Gui(Window& window)
 {
     // Setup Dear ImGui context
@@ -31,7 +33,9 @@ void Gui::StartFrame()
 
     if (isVisible)
     {
-        ImGui::ShowDemoWindow(); // demo window please change
+        ImGui::Begin("Stats");
+        FPS();
+        ImGui::End();
     }
 }
 
@@ -39,6 +43,12 @@ void Gui::EndFrame()
 {
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+static void FPS()
+{
+    ImGuiIO& io { ImGui::GetIO() };
+    ImGui::Text("FPS: %.1f", io.Framerate);
 }
 
 Gui::~Gui()
