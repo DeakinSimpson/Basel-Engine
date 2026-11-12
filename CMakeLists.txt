@@ -80,7 +80,6 @@ add_executable(Basel_Engine
         src/Shader.cpp
         include/Shader.hpp
         src/stb_image.cpp
-        src/ConfigReader.cpp
         include/ConfigReader.hpp
         src/Renderer.cpp
         include/Renderer.hpp
