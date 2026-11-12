@@ -118,6 +118,8 @@ add_executable(Basel_Engine
         include/Camera.hpp
         src/Gui.cpp
         include/Gui.hpp
+        src/Cube.cpp
+        include/Cube.hpp
 )
 
 target_include_directories(Basel_Engine PRIVATE include)
