@@ -161,9 +161,18 @@ void Window::ToggleWireframe()
 }
 
 // TODO: make this changeable when opening the menu (esc)
-void Window::CaptureCursor()
+void Window::ToggleCaptureCursor()
 {
-    glfwSetInputMode(window_.get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    if (isCaptureCursor_)
+    {
+        glfwSetInputMode(window_.get(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        isCaptureCursor_ = false;
+    }
+    else
+    {
+        glfwSetInputMode(window_.get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        isCaptureCursor_ = true;
+    }
 }
 
 glm::vec2 Window::GetMousePosition()

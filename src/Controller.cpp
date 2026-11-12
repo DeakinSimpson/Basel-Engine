@@ -11,51 +11,24 @@
  *
  * @param window The window that the input will be derived from
  */
-Controller::Controller(Window& window)
-{
-    window.CaptureCursor();
-}
+Controller::Controller()
+{  }
 
-/**
- * Checks if the escape key was pressed, if so close the program
- *
- * TODO: Move escape key to bring up gui rather then close
- *
- * @param window The window that will capture the input
- */
-static void ProcessEscapeKey(Window& window)
-{
-    if (window.KeyStatus(GLFW_KEY_ESCAPE, GLFW_PRESS))
-    {
-        window.Close();
-    }
-}
 
-/**
- * Checks if the p key was pressed last frame, if it was not and it is this frame
- * then toggle the wire frame.
- *
- * This last frame check needs to be done so that the when clicking the key the
- * window does not send thousands of p presses and thus wireframe toggles, this
- * means that holding the p key will not toggle on and off and requires the user
- * to stop pressing before clicking again to activate the toggle.
- *
- * @param window The window that will capture the input
- * @param pKeyPressedLastFrame Was the P key pressed last frame
- */
-static void ProcessPKey(Window& window, bool& pKeyPressedLastFrame)
+template <typename F>
+static void ProcessToggleKeyPress(Window& window, const int key, F function, bool& isPressedLastFrame)
 {
-    if (window.KeyStatus(GLFW_KEY_P, GLFW_PRESS))
+    if (window.KeyStatus(key, GLFW_PRESS))
     {
-        if (!pKeyPressedLastFrame)
+        if (!isPressedLastFrame)
         {
-            window.ToggleWireframe();
-            pKeyPressedLastFrame = true;
+            function();
+            isPressedLastFrame = true;
         }
     }
     else
     {
-        pKeyPressedLastFrame = false;
+        isPressedLastFrame = false;
     }
 }
 
@@ -110,8 +83,8 @@ static void ProcessMovement(Camera& camera, Window& window, const float deltaTim
  */
 void Controller::ProcessInput(Window& window, Camera& camera, const float deltaTime)
 {
-    ProcessEscapeKey(window);
-    ProcessPKey(window, pPressedLastFrame);
+    ProcessToggleKeyPress(window, GLFW_KEY_P, [&window]() { window.ToggleWireframe(); }, pressedLastFrame.p);
+    ProcessToggleKeyPress(window, GLFW_KEY_ESCAPE, [&window]() { window.ToggleCaptureCursor(); }, pressedLastFrame.esc);
     ProcessMovement(camera, window, deltaTime);
     ProcessMouse(window, camera);
 }

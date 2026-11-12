@@ -16,6 +16,7 @@ Gui::Gui(Window& window)
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+    io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
 
     // Setup Platform/Renderer backends
     ImGui_ImplGlfw_InitForOpenGL(window.GetWindow(), true);

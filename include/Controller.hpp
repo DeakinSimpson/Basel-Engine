@@ -8,12 +8,18 @@
 
 class Controller
 {
+    struct PressedLastFrame
+    {
+        bool p { false };
+        bool esc { false };
+    };
+    PressedLastFrame pressedLastFrame;
     bool pPressedLastFrame { false };
     bool firstMouse_ { true };
     glm::vec2 lastMouse_ { 0.0f };
 
 public:
-    Controller(Window& window);
+    Controller();
     void ProcessInput(Window& window, Camera& camera, const float deltaTime);
 
 private:

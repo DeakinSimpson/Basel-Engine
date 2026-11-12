@@ -8,7 +8,7 @@
 
 #include "Cube.hpp"
 
-Engine::Engine() : controller_(window_) , gui_(window_)
+Engine::Engine() : gui_(window_)
 {
     std::cout << "Starting Engine" << std::endl;
     Run();

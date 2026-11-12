@@ -11,6 +11,7 @@
 class Window
 {
     std::unique_ptr<GLFWwindow, decltype(&glfwDestroyWindow)> window_;
+    bool isCaptureCursor_ { true };
     bool isWireframeMode { false };
 public:
     Window();
@@ -22,7 +23,7 @@ public:
     bool KeyStatus(const int key, const int action);
     void SetBackground(const float r, const float g, const float b, const float a);
     void ToggleWireframe();
-    void CaptureCursor();
+    void ToggleCaptureCursor();
     glm::vec2 GetMousePosition();
     GLFWwindow* GetWindow() const { return window_.get(); }
 };
