@@ -12,6 +12,10 @@ struct Transform
     glm::vec3 rotation { 0.0f };
     glm::vec3 scale    { 1.0f };
 
+    /**
+     *
+     * @return A 4x4 matrix based on the Transform values
+     */
     glm::mat4 GetMatrix() const
     {
         glm::mat4 model { 1.0f };

@@ -19,5 +19,4 @@ public:
     Renderer();
     void BeginFrame(Camera& camera, const float aspectRatio);
     void Render(Renderable& renderable);
-
 };
