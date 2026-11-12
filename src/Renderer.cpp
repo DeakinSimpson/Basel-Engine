@@ -10,11 +10,21 @@
 #include "Renderable.hpp"
 #include "glad/gl.h"
 
+/**
+ * On Renderer Initialization make sure to enable depth test otherwise triangles
+ * that are in front are not rendered on top of triangles behind.
+ */
 Renderer::Renderer()
 {
     glEnable(GL_DEPTH_TEST);
 }
 
+/**
+ * Calls functions that need to be called at the start of each frame
+ *
+ * @param camera
+ * @param aspectRatio
+ */
 void Renderer::BeginFrame(Camera& camera, const float aspectRatio)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -22,6 +32,11 @@ void Renderer::BeginFrame(Camera& camera, const float aspectRatio)
     projection_ = glm::perspective(glm::radians(45.0f), aspectRatio, 0.1f, 100.0f);
 }
 
+/**
+ * Set the current renderers values for the object and render each frame
+ *
+ * @param renderable The object that will be rendered
+ */
 void Renderer::Render(Renderable& renderable)
 {
     Shader& shader { renderable.GetShader() };
