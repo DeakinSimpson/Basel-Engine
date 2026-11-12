@@ -61,27 +61,58 @@ void Shader::UseShaderProgram()
     glUseProgram(shaderProgram_);
 }
 
+/**
+ * Sets a bool in the shaderProgram
+ *
+ * @param name The name of the input in the shaderCode
+ * @param value The value that will be passed into the shader
+ */
 void Shader::SetBool(const std::string &name, bool value) const
 {
     glUniform1i(glGetUniformLocation(
         shaderProgram_, name.c_str()), static_cast<int>(value));
 }
 
+/**
+ * Sets a int in the shaderProgram
+ *
+ * @param name The name of the input in the shaderCode
+ * @param value The value that will be passed into the shader
+ */
 void Shader::SetInt(const std::string &name, int value) const
 {
     glUniform1i(glGetUniformLocation(shaderProgram_, name.c_str()), value);
 }
 
+/**
+ * Sets a float in the shaderProgram
+ *
+ * @param name The name of the input in the shaderCode
+ * @param value The value that will be passed into the shader
+ */
 void Shader::SetFloat(const std::string &name, float value) const
 {
     glUniform1i(glGetUniformLocation(shaderProgram_, name.c_str()), value);
 }
 
+/**
+ * Sets a 4x4 matrix in the shaderProgram
+ *
+ * @param name The name of the input in the shaderCode
+ * @param value The value that will be passed into the shader
+ */
 void Shader::SetMat4(const std::string &name, const glm::mat4& value) const
 {
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram_, name.c_str()), 1, GL_FALSE, glm::value_ptr((value)));
 }
 
+/**
+ * Gets the shaders code from the shaderPath and returns a std::string of the
+ * code
+ *
+ * @param shaderPath Gets the code that is needed for the shaderProgram
+ * @return returns a std::string of the shader from a file
+ */
 static std::string GetShaderCode(const char* shaderPath)
 {
     std::ifstream shaderFile;
@@ -109,6 +140,13 @@ static std::string GetShaderCode(const char* shaderPath)
     }
 }
 
+/**
+ * Opens a texture at texturePath then compiles the texture and returns the
+ * textureID
+ *
+ * @param texturePath The texture that wil be opened
+ * @return The texture id
+ */
 static uint32_t CompileTexture(const char* texturePath)
 {
     uint32_t texture;
