@@ -31,47 +31,87 @@ class Camera
     float pitch_ { 0.0f };
 
 public:
-    [[nodiscard]] glm::vec3 GetDirection() const
-    {
-        return glm::normalize(cameraPos_ - cameraTarget_);
-    }
+    /**
+     *
+     * @return The vector of the direction that is right of the facing direction
+     */
     [[nodiscard]] glm::vec3 GetRight() const
     {
         return glm::normalize(glm::cross(cameraFront_, cameraUp_));
     }
+
+    /**
+     *
+     * @return returns the cameras current view matrix
+     */
     [[nodiscard]] glm::mat4 GetView() const
     {
         return glm::lookAt(cameraPos_, cameraPos_ + cameraFront_, cameraUp_);
     }
+
+    /**
+     *
+     * @param deltaTime The time that has passed since the last frame
+     * @return the speed based on the camera speed and the time since last frame
+     */
     [[nodiscard]] float GetSpeed(const float deltaTime) const
     {
         return cameraSpeed_ * deltaTime;
     }
 
+    /**
+     * This function moves the camera towards the facing direction
+     *
+     * @param deltaTime Elapsed time since last frame
+     */
     void MoveForward(const float deltaTime)
     {
         cameraPos_ += GetSpeed(deltaTime) * cameraFront_;
     }
 
+    /**
+     * Moves camera left of the facing direction
+     *
+     * @param deltaTime Elapsed time since last frame
+     */
     void MoveLeft(const float deltaTime)
     {
         cameraPos_ -= GetRight() *
             GetSpeed(deltaTime);
     }
 
+    /**
+     * Moves camera right of the cameras facing direction
+     *
+     * @param deltaTime Elapsed time since last frame
+     */
     void MoveRight(const float deltaTime)
     {
         cameraPos_ += GetRight() *
             GetSpeed(deltaTime);
     }
 
+    /**
+     * Moves camera back from the camera facing direction
+     *
+     * @param deltaTime Elapsed time since last frame
+     */
     void MoveBack(const float deltaTime)
     {
         cameraPos_ -= GetSpeed(deltaTime) * cameraFront_;
     }
 
+    /**
+     * This function takes in the how much the mouse has moved and and updates
+     * the offset based on sensitivity before calling UpdateVectors to update
+     * the cameras facing directions.
+     *
+     * @param xOffset How far the mouse moved in x since last frame
+     * @param yOffset How far the mouse moved in y since last frame
+     * @param constrainPitch To lock the camera from going to far up or down
+     */
     void ProcessMouseMovement(float xOffset, float yOffset,
-        const bool constrainPitch = true)
+                              const bool constrainPitch = true)
     {
         // increase the offset based on the mouse sensitivity
         xOffset *= mouseSensitivity_;
@@ -92,7 +132,9 @@ public:
         UpdateVectors();
     }
 private:
-
+    /**
+     * Updates the cameras cameraFront_ vector based on the current pitch and yaw
+     */
     void UpdateVectors()
     {
         // calculate a new cameraFront_ vector based on new pitch and yaw
