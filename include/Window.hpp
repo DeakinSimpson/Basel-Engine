@@ -24,4 +24,5 @@ public:
     void ToggleWireframe();
     void CaptureCursor();
     glm::vec2 GetMousePosition();
+    GLFWwindow* GetWindow() const { return window_.get(); }
 };

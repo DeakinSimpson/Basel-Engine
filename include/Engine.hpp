@@ -4,6 +4,7 @@
 
 #pragma once
 #include "Controller.hpp"
+#include "Gui.hpp"
 #include "Renderer.hpp"
 #include "Window.hpp"
 
@@ -16,6 +17,7 @@ class Engine
     Camera camera_;
     float deltaTime_ { 0.0f };
     float lastFrame_ { 0.0f };
+    Gui gui_;
 public:
     Engine();
     void Run();

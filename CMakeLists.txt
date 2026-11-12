@@ -19,6 +19,8 @@ set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
 FetchContent_MakeAvailable(glfw)
 
+find_package(OpenGL REQUIRED)
+
 # fetch glad -------------------------------------------------------------------
 FetchContent_Declare(
         glad
@@ -28,6 +30,8 @@ FetchContent_Declare(
 )
 
 FetchContent_MakeAvailable(glad)
+
+glad_add_library(glad_gl TYPE STATIC API gl:core=4.6)
 
 # fetch stb --------------------------------------------------------------------
 FetchContent_Declare(
@@ -59,7 +63,34 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(json)
 
-glad_add_library(glad_gl TYPE STATIC API gl:core=4.6)
+# fetch imgui ------------------------------------------------------------------
+FetchContent_Declare(
+        imgui
+        GIT_REPOSITORY https://github.com/ocornut/imgui.git
+        GIT_TAG docking
+        GIT_SHALLOW TRUE
+)
+
+FetchContent_MakeAvailable(imgui)
+
+# if more imgui source files are needed, add here
+add_library(imgui STATIC
+        ${imgui_SOURCE_DIR}/imgui.cpp
+        ${imgui_SOURCE_DIR}/imgui_demo.cpp
+        ${imgui_SOURCE_DIR}/imgui_draw.cpp
+        ${imgui_SOURCE_DIR}/imgui_tables.cpp
+        ${imgui_SOURCE_DIR}/imgui_widgets.cpp
+
+        ${imgui_SOURCE_DIR}/backends/imgui_impl_glfw.cpp
+        ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp
+)
+
+target_include_directories(imgui PUBLIC
+        ${imgui_SOURCE_DIR}
+        ${imgui_SOURCE_DIR}/backends
+)
+
+target_link_libraries(imgui PUBLIC glfw OpenGL::GL)
 
 # create executable and link libraries -----------------------------------------
 add_executable(Basel_Engine
@@ -85,9 +116,10 @@ add_executable(Basel_Engine
         include/Renderer.hpp
         src/Camera.cpp
         include/Camera.hpp
+        src/Gui.cpp
+        include/Gui.hpp
 )
 
 target_include_directories(Basel_Engine PRIVATE include)
 
-find_package(OpenGL REQUIRED)
-target_link_libraries(Basel_Engine PRIVATE glfw glad_gl stb glm::glm OpenGL::GL nlohmann_json::nlohmann_json)
+target_link_libraries(Basel_Engine PRIVATE glfw glad_gl stb glm::glm OpenGL::GL imgui nlohmann_json::nlohmann_json)

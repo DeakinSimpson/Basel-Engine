@@ -8,7 +8,7 @@
 
 #include "Cube.hpp"
 
-Engine::Engine() : controller_(window_)
+Engine::Engine() : controller_(window_) , gui_(window_)
 {
     std::cout << "Starting Engine" << std::endl;
     Run();
@@ -20,6 +20,7 @@ void Engine::Run()
     Cube cube;
     while (!window_.ShouldClose())
     {
+        gui_.StartFrame();
         UpdateTime();
         controller_.ProcessInput(window_, camera_, deltaTime_);
         // TODO: Remove later
@@ -28,8 +29,9 @@ void Engine::Run()
         renderer_.BeginFrame(camera_, 800.0f / 600.0f);
         renderer_.Render(cube);
 
+        gui_.EndFrame();
         window_.SwapBuffers();
-        glfwPollEvents ();
+        glfwPollEvents();
     }
 }
 
