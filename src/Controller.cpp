@@ -3,7 +3,7 @@
 //
 
 #include "../include/Controller.hpp"
-
+#include "Gui.hpp"
 #include "Window.hpp"
 
 /**
@@ -81,10 +81,16 @@ static void ProcessMovement(Camera& camera, Window& window, const float deltaTim
  * @param camera The camera that will be updated
  * @param deltaTime The time that has passed since the last frame
  */
-void Controller::ProcessInput(Window& window, Camera& camera, const float deltaTime)
+void Controller::ProcessInput(Gui& gui, Window& window, Camera& camera, const float deltaTime)
 {
-    ProcessToggleKeyPress(window, GLFW_KEY_P, [&window]() { window.ToggleWireframe(); }, pressedLastFrame.p);
-    ProcessToggleKeyPress(window, GLFW_KEY_ESCAPE, [&window]() { window.ToggleCaptureCursor(); }, pressedLastFrame.esc);
-    ProcessMovement(camera, window, deltaTime);
-    ProcessMouse(window, camera);
+    ProcessToggleKeyPress(window, GLFW_KEY_P, [&window]()
+        { window.ToggleWireframe(); }, pressedLastFrame.p);
+    ProcessToggleKeyPress(window, GLFW_KEY_ESCAPE, [&window, &gui]()
+        { window.ToggleCaptureCursor(); gui.ToggleGui(); }, pressedLastFrame.esc);
+
+    if (!gui.GetVisibility())
+    {
+        ProcessMovement(camera, window, deltaTime);
+        ProcessMouse(window, camera);
+    }
 }

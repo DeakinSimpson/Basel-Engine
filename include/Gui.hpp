@@ -2,20 +2,19 @@
 // Created by deakin on 11/12/26.
 //
 
-#ifndef BASEL_ENGINE_GUI_HPP
-#define BASEL_ENGINE_GUI_HPP
-#include "Window.hpp"
+#pragma once
 
+#include "Window.hpp"
 
 class Gui
 {
+    bool isVisible { false };
 public:
     Gui(Window& window);
     ~Gui();
 
     void StartFrame();
     void EndFrame();
+    void ToggleGui() { isVisible = !isVisible; }
+    bool GetVisibility() const { return isVisible; }
 };
-
-
-#endif //BASEL_ENGINE_GUI_HPP

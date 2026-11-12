@@ -28,7 +28,11 @@ void Gui::StartFrame()
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
-    ImGui::ShowDemoWindow(); // demo window please change
+
+    if (isVisible)
+    {
+        ImGui::ShowDemoWindow(); // demo window please change
+    }
 }
 
 void Gui::EndFrame()

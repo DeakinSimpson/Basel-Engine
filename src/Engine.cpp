@@ -22,7 +22,7 @@ void Engine::Run()
     {
         gui_.StartFrame();
         UpdateTime();
-        controller_.ProcessInput(window_, camera_, deltaTime_);
+        controller_.ProcessInput(gui_, window_, camera_, deltaTime_);
         // TODO: Remove later
         window_.SetBackground(0.2, 0.3, 0.3, 1.0);
 

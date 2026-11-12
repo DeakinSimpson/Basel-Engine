@@ -5,6 +5,7 @@
 #pragma once
 #include "Camera.hpp"
 #include "Window.hpp"
+#include "Gui.hpp"
 
 class Controller
 {
@@ -20,7 +21,7 @@ class Controller
 
 public:
     Controller();
-    void ProcessInput(Window& window, Camera& camera, const float deltaTime);
+    void ProcessInput(Gui& gui, Window& window, Camera& camera, const float deltaTime);
 
 private:
     void ProcessMouse(Window& window, Camera& camera);
