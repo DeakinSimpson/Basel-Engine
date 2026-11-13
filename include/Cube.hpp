@@ -7,16 +7,9 @@
 
 class Cube
 {
-    struct CubeFaces
-    {
-        Square top;
-        Square bottom;
-        Square xp;
-        Square xn;
-        Square yp;
-        Square yn;
-    };
+    std::array<Square, 6> cubeFaces_;
 
-    CubeFaces cubeFaces_;
+public:
+    void Render(const std::array<bool, 6> facesToRender);
 };
 
